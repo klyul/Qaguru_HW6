@@ -1,17 +1,19 @@
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+
 public class DragDropTests {
 
     @Test
-    void checkEnterprisePage() {
-
-    open("https://github.com/");
-    $(".header-menu-wrapper").$(byText("Solutions")).hover();
-    $(byText("Enterprise")).click();
-    $(".enterprise-hero").shouldHave(text("Build like the best"));
-        }
-        }
+    void dragAndDropTest() {
+        open("https://the-internet.herokuapp.com/drag_and_drop");
+        SelenideElement elementA = $("#column-a");
+        SelenideElement elementB = $("#column-b");
+        elementA.dragAndDropTo(elementB);
+        elementA.shouldHave(exactText("B"));
+        elementB.shouldHave(exactText("A"));
+    }
+}
